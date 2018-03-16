@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {WelcomeComponent} from './home/welcome.component';
 import {RouterModule} from '@angular/router';
 import {ProductModule} from './products/product.module';
+import {CustomerModule} from './customer/customer.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {ProductModule} from './products/product.module';
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
       {path: '**', redirectTo: 'welcome', pathMatch: 'full'}
     ]),
-    ProductModule
+    ProductModule,
+    CustomerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
