@@ -35,6 +35,7 @@
           <th>Available</th>
           <th>Price</th>
           <th>5 Star Rating</th>
+          <th></th>
         </tr>
         </thead>
         <tbody>
@@ -46,13 +47,16 @@
                  [style.width.px]="imageWidth"
                  [style.margin.px]="imageMargin">
           </td>
-          <td><a [routerLink]="['/products',product.productId]">{{product.productName}}</a></td>
+          <td><a [routerLink]="['/products',product.id]">{{product.productName}}</a></td>
           <td>{{product.productCode | lowercase |convertToSpaces: '-' }}</td>
           <td>{{product.releaseDate}}</td>
           <td>{{product.price | currency:'USD':true:'1.2-2'}}</td>
           <td>
             <pm-star [rating]="product.starRating"
                      (ratingClicked)="onRatingClicked($event)"></pm-star>
+          </td>
+          <td>
+            <a [routerLink]="['/productsEdit',product.id]" class="btn btn-info">Edit</a>
           </td>
         </tr>
         </tbody>

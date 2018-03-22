@@ -1,0 +1,85 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  </div>
+
+  <div class="panel-body">
+    <form class="form-horizontal"
+          novalidate
+          (ngSubmit)="save()"
+          [formGroup]="productEditForm">
+      <fieldset>
+        <div class="form-group"
+             [ngClass]="{'has-error': displayMessage.productName }">
+          <label class="col-md-2 control-label"
+                 for="productNameId">Product name</label>
+
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="productNameId"
+                   type="text"
+                   placeholder="Product Name (required)"
+                   formControlName="productName"/>
+            <span class="help-block" *ngIf="displayMessage.productName">
+                                {{displayMessage.productName}}
+                        </span>
+          </div>
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{'has-error': displayMessage.productCode }">
+          <label class="col-md-2 control-label"
+                 for="productCodeId">Product Code</label>
+
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="productCodeId"
+                   type="text"
+                   placeholder="Product code (required)"
+                   formControlName="productCode"/>
+            <span class="help-block" *ngIf="displayMessage.productCode">
+                                {{displayMessage.productCode}}
+                        </span>
+          </div>
+        </div>
+
+        <div class="form-group"
+             [ngClass]="{'has-error': displayMessage.description }">
+          <label class="col-md-2 control-label"
+                 for="descriptionId">Description</label>
+
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="descriptionId"
+                   type="text"
+                   placeholder="Description"
+                   formControlName="description"/>
+            <span class="help-block" *ngIf="displayMessage.description">
+                                {{displayMessage.description}}
+                        </span>
+          </div>
+        </div>
+        <div class="form-group"
+             [ngClass]="{'has-error': displayMessage.starRating }">
+
+        <label class="col-md-2 control-label"
+                 for="ratingId">Star Rating</label>
+
+          <div class="col-md-8">
+            <input class="form-control"
+                   id="ratingId"
+                   type="text"
+                   formControlName="starRating"/>
+            <span class="help-block" *ngIf="displayMessage.starRating">
+                                {{displayMessage.starRating}}
+                        </span>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="panel-footer">
+    <a class="btn btn-success" (click)='save()'>Save
+    </a>
+  </div>
+</div>
+

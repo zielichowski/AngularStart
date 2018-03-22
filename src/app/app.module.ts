@@ -2,11 +2,11 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
 import {WelcomeComponent} from './home/welcome.component';
 import {RouterModule} from '@angular/router';
 import {ProductModule} from './products/product.module';
 import {CustomerModule} from './customer/customer.module';
+import {HttpModule} from '@angular/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +15,7 @@ import {CustomerModule} from './customer/customer.module';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpModule,
     RouterModule.forRoot([
       {path: 'welcome', component: WelcomeComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},

@@ -9,12 +9,12 @@ import {FormsModule} from '@angular/forms';
 
   ],
   declarations: [
-    StarComponent
+    StarComponent,
   ],
   exports: [
     StarComponent,
     CommonModule,
-    FormsModule
+    FormsModule,
   ]
 })
 export class SharedModule { }
