@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChildren, ElementRef} from '@angular/core';
 import {FormBuilder, FormControlName, FormGroup, Validators} from '@angular/forms';
-import {ProductService} from '../product.service';
+import {ProductService} from '../products-list/product.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import {RatingValidator} from '../../shared/rating-validator';
@@ -42,13 +42,23 @@ export class ProductEditComponent implements OnInit, OnDestroy, AfterViewInit {
       starRating: ['', RatingValidator.ratingRange(1, 5)]
     });
 
+    this._route.data.subscribe(data => {
+      const product =  data['product'];
+      this.product = product;
+      this.productEditForm.patchValue({
+        productName: product.productName,
+        productCode: product.productCode,
+        description: product.description,
+        starRating: product.starRating
+      });
+    });
 
-    this.sub = this._route.params.subscribe(
-      params => {
-        const id = +params['id'];
-        this.getProducts(id);
-      }
-    );
+    // this.sub = this._route.paramMap.subscribe(
+    //   params => {
+    //     const id = +params.get('id');
+    //     this.getProducts(id);
+    //   }
+    // );
 
     this.validationMessages = {
       productName: {
@@ -68,7 +78,7 @@ export class ProductEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -96,19 +106,6 @@ export class ProductEditComponent implements OnInit, OnDestroy, AfterViewInit {
     } else if (!this.productEditForm.dirty) {
       this.onSaveComplete();
     }
-  }
-
-  private getProducts(id: number) {
-    this.productService.getProduct(id)
-      .subscribe(product => {
-        this.product = product;
-        this.productEditForm.patchValue({
-          productName: product.productName,
-          productCode: product.productCode,
-          description: product.description,
-          starRating: product.starRating
-        });
-      });
   }
 
   onSaveComplete(): void {

@@ -39,7 +39,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let product of filteredProducts">
+        <tr *ngFor="let product of products | productFilter:listFilter">
           <td>
             <img *ngIf="showImage"
                  [src]="product.imageUrl"
@@ -47,7 +47,10 @@
                  [style.width.px]="imageWidth"
                  [style.margin.px]="imageMargin">
           </td>
-          <td><a [routerLink]="['/products',product.id]">{{product.productName}}</a></td>
+          <td><a [routerLink]="['/products',product.id]"
+                 [queryParams]="{filterBy: listFilter, showImage: showImage}">
+            {{product.productName}}
+          </a></td>
           <td>{{product.productCode | lowercase |convertToSpaces: '-' }}</td>
           <td>{{product.releaseDate}}</td>
           <td>{{product.price | currency:'USD':true:'1.2-2'}}</td>
@@ -56,7 +59,7 @@
                      (ratingClicked)="onRatingClicked($event)"></pm-star>
           </td>
           <td>
-            <a [routerLink]="['/productsEdit',product.id]" class="btn btn-info">Edit</a>
+            <a [routerLink]="['/products',product.id, 'edit']" class="btn btn-info">Edit</a>
           </td>
         </tr>
         </tbody>

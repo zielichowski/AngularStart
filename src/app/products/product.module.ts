@@ -1,15 +1,19 @@
 import {NgModule} from '@angular/core';
-import {ProductListComponent} from './product-list.component';
-import {ProductDetailsComponent} from './product-details.component';
+import {ProductListComponent} from './products-list/product-list.component';
+import {ProductDetailsComponent} from './product-detail/product-details.component';
 import {ConvertToSpacesPipe} from '../shared/convert-to-spaces.pipe';
 import {RouterModule} from '@angular/router';
-import {ProductGuardService} from './product-guard.service';
-import {ProductService} from './product.service';
+import {ProductGuardService} from './products-list/product-guard.service';
+import {ProductService} from './products-list/product.service';
 import {SharedModule} from './../shared/shared.module';
-import { ProductEditComponent } from './product-edit/product-edit.component';
+import {ProductEditComponent} from './product-edit/product-edit.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {ProductData} from './product-data';
 import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {ProductFilterPipe} from './products-list/product-filter.pipe';
+import {ProductResolver} from './products-list/product-resolver.service';
+import { ProductEditInfoComponent } from './product-edit/product-edit-info/product-edit-info.component';
+import { ProductEditDetailsComponent } from './product-edit/product-edit-details/product-edit-details.component';
 
 @NgModule({
   imports: [
@@ -18,8 +22,29 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
     InMemoryWebApiModule.forRoot(ProductData),
     RouterModule.forChild([
       {path: 'products', component: ProductListComponent},
-      {path: 'products/:id', canActivate: [ProductGuardService], component: ProductDetailsComponent},
-      {path: 'productsEdit/:id', canActivate: [ProductGuardService], component: ProductEditComponent},
+      {
+        path: 'products/:id',
+        canActivate: [ProductGuardService],
+        component: ProductDetailsComponent,
+        resolve: {'product': ProductResolver}
+      },
+      {
+        path: 'products/:id/edit',
+        canActivate: [ProductGuardService],
+        component: ProductEditComponent,
+        resolve: {'product': ProductResolver},
+        children: [
+          {
+            path: '', redirectTo: 'info', pathMatch: 'full'
+          },
+          {
+            path: 'info', component: ProductEditInfoComponent
+          },
+          {
+            path: 'details', component: ProductEditDetailsComponent
+          }
+        ]
+      },
 
     ]),
 
@@ -28,11 +53,16 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
     ProductListComponent,
     ProductDetailsComponent,
     ConvertToSpacesPipe,
-    ProductEditComponent
+    ProductEditComponent,
+    ProductFilterPipe,
+    ProductEditInfoComponent,
+    ProductEditDetailsComponent
   ],
   providers: [
     ProductGuardService,
-    ProductService
+    ProductService,
+    ProductResolver
   ]
 })
-export class ProductModule { }
+export class ProductModule {
+}

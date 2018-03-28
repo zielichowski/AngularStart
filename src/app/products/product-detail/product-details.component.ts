@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Product} from './product';
+import {Product} from '../product';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProductService} from './product.service';
+import {ProductService} from '../products-list/product.service';
+import {ProductResolver} from "../products-list/product-resolver.service";
 
 @Component({
   templateUrl: './product-details.component.html',
@@ -15,14 +16,14 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.product = this._route.snapshot.data['product'];
     const id = +this._route.snapshot.paramMap.get('id');
-    this._productService.getProduct(id)
-      .subscribe(product => this.product = product);
     this.pageTitle += `: ${id}`;
   }
 
   onBack(): void {
-    this._router.navigate(['/products']);
+    this._router.navigate(['/products'],
+      {queryParamsHandling: 'preserve'});
   }
 
 }
